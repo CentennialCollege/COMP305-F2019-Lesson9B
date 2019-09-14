@@ -41,7 +41,10 @@ public class OceanController : MonoBehaviour
         transform.position = new Vector2(0.0f, resetPosition);
     }
 
-
+    /// <summary>
+    /// This method checks if the ocean reaches the lower boundary
+    /// and then it Resets it
+    /// </summary>
     void CheckBounds()
     {
         if(transform.position.y <= resetPoint)
