@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Util;
 
-public class IslandController : MonoBehaviour
+public class CloudController : MonoBehaviour
 {
     public float verticalSpeed = 0.05f;
-
-
-    public Boundary boundary;
+    public float resetPosition = 2.71f;
+    public float resetPoint = -2.71f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +38,8 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void Reset()
     {
-        float randomXPosition = Random.Range(boundary.Left, boundary.Right);
-        transform.position = new Vector2(randomXPosition, boundary.Top);
+        float randomXPosition = Random.RandomRange(-2.88f, 2.88f);
+        transform.position = new Vector2(randomXPosition, resetPosition);
     }
 
     /// <summary>
@@ -50,7 +48,7 @@ public class IslandController : MonoBehaviour
     /// </summary>
     void CheckBounds()
     {
-        if (transform.position.y <= boundary.Bottom)
+        if (transform.position.y <= resetPoint)
         {
             Reset();
         }
