@@ -13,7 +13,7 @@ public class IslandController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Reset();
+        Reset();
     }
 
     // Update is called once per frame
