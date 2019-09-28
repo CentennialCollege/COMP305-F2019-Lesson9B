@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4066947924111177516}
   - component: {fileID: 4066947924111177517}
   - component: {fileID: 4066947924111177518}
+  - component: {fileID: 4480478663996400083}
   m_Layer: 0
   m_Name: Island
   m_TagString: Island
@@ -99,3 +100,19 @@ MonoBehaviour:
     Right: 2.88
     Bottom: -2.71
     Left: -2.88
+--- !u!58 &4480478663996400083
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4066947924111177519}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.02, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.30154583
