@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 
     public Text livesLabel;
     public Text scoreLabel;
+    public Text highScoreLabel;
+
+    public GameObject highScore;
 
     [Header("UI Control")]
     public GameObject startLabel;
@@ -43,11 +46,16 @@ public class GameController : MonoBehaviour
         set
         {
             _lives = value;
-            if(_lives <= 0)
+            if(_lives < 1)
             {
+                
                 SceneManager.LoadScene("End");
             }
-            livesLabel.text = "Lives: " + _lives.ToString();
+            else
+            {
+                livesLabel.text = "Lives: " + _lives.ToString();
+            }
+           
         }
     }
 
@@ -61,24 +69,50 @@ public class GameController : MonoBehaviour
         set
         {
             _score = value;
+
+            
+
+            if (highScore.GetComponent<HighScore>().score < _score)
+            {
+                highScore.GetComponent<HighScore>().score = _score;
+            }
             scoreLabel.text = "Score: " + _score.ToString();
         }
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
-        switch(SceneManager.GetActiveScene().name)
+        GameObjectInitialization();
+        SceneConfiguration();
+    }
+
+    private void GameObjectInitialization()
+    {
+        highScore = GameObject.Find("HighScore");
+
+        startLabel = GameObject.Find("StartLabel");
+        endLabel = GameObject.Find("EndLabel");
+        startButton = GameObject.Find("StartButton");
+        restartButton = GameObject.Find("RestartButton");
+    }
+
+
+    private void SceneConfiguration()
+    {
+
+        switch (SceneManager.GetActiveScene().name)
         {
             case "Start":
                 scoreLabel.enabled = false;
                 livesLabel.enabled = false;
+                highScoreLabel.enabled = false;
                 endLabel.SetActive(false);
                 restartButton.SetActive(false);
                 activeSoundClip = SoundClip.NONE;
                 break;
             case "Main":
+                highScoreLabel.enabled = false;
                 startLabel.SetActive(false);
                 startButton.SetActive(false);
                 endLabel.SetActive(false);
@@ -91,16 +125,15 @@ public class GameController : MonoBehaviour
                 startLabel.SetActive(false);
                 startButton.SetActive(false);
                 activeSoundClip = SoundClip.NONE;
+                highScoreLabel.text = "High Score: " + highScore.GetComponent<HighScore>().score;
                 break;
         }
-
-
 
         Lives = 5;
         Score = 0;
 
 
-        if((activeSoundClip != SoundClip.NONE) && (activeSoundClip != SoundClip.NUM_OF_CLIPS))
+        if ((activeSoundClip != SoundClip.NONE) && (activeSoundClip != SoundClip.NUM_OF_CLIPS))
         {
             AudioSource activeAudioSource = audioSources[(int)activeSoundClip];
             activeAudioSource.playOnAwake = true;
@@ -108,7 +141,7 @@ public class GameController : MonoBehaviour
             activeAudioSource.volume = 0.5f;
             activeAudioSource.Play();
         }
-        
+
 
 
         // creates an empty container (list) of type GameObject
@@ -131,6 +164,7 @@ public class GameController : MonoBehaviour
     // Event Handlers
     public void OnStartButtonClick()
     {
+        DontDestroyOnLoad(highScore);
         SceneManager.LoadScene("Main");
     }
 
