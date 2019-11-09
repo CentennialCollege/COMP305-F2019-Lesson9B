@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+
 
 public class GameController : MonoBehaviour
 {
@@ -27,7 +29,9 @@ public class GameController : MonoBehaviour
     public Text scoreLabel;
     public Text highScoreLabel;
 
-    public GameObject highScore;
+    public GameObject scoreBoard;
+
+    //public HighScoreSO highScoreSO;
 
     [Header("UI Control")]
     public GameObject startLabel;
@@ -70,11 +74,12 @@ public class GameController : MonoBehaviour
         {
             _score = value;
 
-            
 
-            if (highScore.GetComponent<HighScore>().score < _score)
+            if (scoreBoard.GetComponent<ScoreBoard>().highScore < _score)
+            //if (highScoreSO.score < _score)
             {
-                highScore.GetComponent<HighScore>().score = _score;
+                scoreBoard.GetComponent<ScoreBoard>().highScore = _score;
+                //highScoreSO.score = _score;
             }
             scoreLabel.text = "Score: " + _score.ToString();
         }
@@ -89,18 +94,19 @@ public class GameController : MonoBehaviour
 
     private void GameObjectInitialization()
     {
-        highScore = GameObject.Find("HighScore");
+        scoreBoard = GameObject.Find("ScoreBoard");
 
         startLabel = GameObject.Find("StartLabel");
         endLabel = GameObject.Find("EndLabel");
         startButton = GameObject.Find("StartButton");
         restartButton = GameObject.Find("RestartButton");
+
+        //highScoreSO = Resources.FindObjectsOfTypeAll<HighScoreSO>()[0] as HighScoreSO;
     }
 
 
     private void SceneConfiguration()
     {
-
         switch (SceneManager.GetActiveScene().name)
         {
             case "Start":
@@ -125,7 +131,7 @@ public class GameController : MonoBehaviour
                 startLabel.SetActive(false);
                 startButton.SetActive(false);
                 activeSoundClip = SoundClip.NONE;
-                highScoreLabel.text = "High Score: " + highScore.GetComponent<HighScore>().score;
+                highScoreLabel.text = "High Score: " + scoreBoard.GetComponent<ScoreBoard>().highScore;
                 break;
         }
 
@@ -164,7 +170,7 @@ public class GameController : MonoBehaviour
     // Event Handlers
     public void OnStartButtonClick()
     {
-        DontDestroyOnLoad(highScore);
+        DontDestroyOnLoad(scoreBoard);
         SceneManager.LoadScene("Main");
     }
 
