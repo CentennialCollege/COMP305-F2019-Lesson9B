@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject island;
     public int numberOfClouds;
     public List<GameObject> clouds;
+    public GameObject explosion;
 
     [Header("Audio Sources")]
     public SoundClip activeSoundClip;

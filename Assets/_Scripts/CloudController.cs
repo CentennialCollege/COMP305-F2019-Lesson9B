@@ -18,15 +18,27 @@ public class CloudController : MonoBehaviour
     [SerializeField]
     public Boundary boundary;
 
+    private SpriteRenderer spriteRenderer;
+
+    private Color halfRed;
+    private Color halfWhite;
+
     // Start is called before the first frame update
     void Start()
     {
         Reset();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        halfRed  = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+        halfWhite = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // pulse the colour of the clouds from red to white
+        spriteRenderer.material.color = 
+            Color.Lerp(halfRed, halfWhite, Mathf.PingPong(Time.time, 1));
         Move();
         CheckBounds();
     }
