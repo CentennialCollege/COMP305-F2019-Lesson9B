@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class ExplosionManager : MonoBehaviour
 {
-    private GameController gameController;
-    private GameObject explosion; // explosion prefab
-
     // a collection to house the explosions
     private static Queue<GameObject> explosions;
     public int explosionNumber = 10;
@@ -33,10 +30,6 @@ public class ExplosionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // references to game objects and scripts
-        gameController = gameObject.GetComponent<GameController>();
-        explosion = gameController.explosion;
-
         // instantiate a queue of type GameObject
         explosions = new Queue<GameObject>();
 
@@ -48,8 +41,8 @@ public class ExplosionManager : MonoBehaviour
         // build the pool
         for (int i = 0; i < explosionNumber; i++)
         {
-            var newExplosion = Instantiate(explosion);
-            newExplosion.SetActive(false);
+            var newExplosion = ExplosionFactory.GetInstance().createRandomExplosion();
+
             // set the parent to the explosion container
             newExplosion.transform.parent = explosionContainer.transform;
             explosions.Enqueue(newExplosion);
